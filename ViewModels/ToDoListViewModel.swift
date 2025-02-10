@@ -12,9 +12,11 @@ class ToDoListViewModel: ObservableObject {
     @Published var showingNewItemView = false
     
     private let userId: String
+    private let folderTitle: String
     
-    init(userId: String) {
+    init(userId: String, folderTitle: String) {
         self.userId = userId
+        self.folderTitle = folderTitle
     }
     
     func delete(id: String) {
@@ -22,6 +24,8 @@ class ToDoListViewModel: ObservableObject {
         
         db.collection("users")
             .document(userId)
+            .collection("folders")
+            .document(folderTitle)
             .collection("todos")
             .document(id)
             .delete()

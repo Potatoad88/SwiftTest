@@ -16,7 +16,7 @@ class NewItemViewModel: ObservableObject {
     
     init() {}
     
-    func save() {
+    func save(folderTitle: String) {
         guard canSave else {
             return
         }
@@ -32,6 +32,8 @@ class NewItemViewModel: ObservableObject {
         
         db.collection("users")
             .document(uId)
+            .collection("folders")
+            .document(folderTitle)
             .collection("todos")
             .document(newId)
             .setData(newItem.asDictionary())

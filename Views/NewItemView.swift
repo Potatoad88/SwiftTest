@@ -11,6 +11,13 @@ struct NewItemView: View {
     @StateObject var viewModel = NewItemViewModel()
     @Binding var newItemPresented: Bool
     
+    var folderTitle: String
+    
+    init(newItemPresented: Binding<Bool>, folderTitle: String) {
+        self._newItemPresented = newItemPresented
+        self.folderTitle = folderTitle
+    }
+    
     var body: some View {
         VStack {
             Text("New Item")
@@ -27,7 +34,7 @@ struct NewItemView: View {
                 
                 TLButton(title: "Save", backgroundColor: Color.pink, action: {
                     if viewModel.canSave {
-                        viewModel.save()
+                        viewModel.save(folderTitle: self.folderTitle)
                         newItemPresented = false
                     } else {
                         viewModel.showAlert = true
@@ -47,5 +54,5 @@ struct NewItemView: View {
         return true
     }, set: { _ in
         
-    }))
+    }), folderTitle: "folder title")
 }

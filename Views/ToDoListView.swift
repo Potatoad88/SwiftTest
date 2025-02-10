@@ -12,9 +12,12 @@ struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel
     @FirestoreQuery var items: [ToDoListItem]
     
-    init(userId: String) {
-        self._items = FirestoreQuery(collectionPath: "users/\(userId)/todos")
-        self._viewModel = StateObject(wrappedValue: ToDoListViewModel(userId: userId))
+    var folderTitle: String
+    
+    init(userId: String, folderTitle: String) {
+        self._items = FirestoreQuery(collectionPath: "users/\(userId)/folders/\(folderTitle)/todos")
+        self._viewModel = StateObject(wrappedValue: ToDoListViewModel(userId: userId, folderTitle: folderTitle))
+        self.folderTitle = folderTitle
     }
     
     var body: some View {
@@ -40,12 +43,12 @@ struct ToDoListView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showingNewItemView) {
-                NewItemView(newItemPresented: $viewModel.showingNewItemView)
+                NewItemView(newItemPresented: $viewModel.showingNewItemView, folderTitle: folderTitle)
             }
         }
     }
 }
 
 #Preview {
-    ToDoListView(userId: "8ql7TlouANRZIVE2h7wOziAEkZI2")
+    ToDoListView(userId: "8ql7TlouANRZIVE2h7wOziAEkZI2", folderTitle: "folder title")
 }
