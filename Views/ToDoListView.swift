@@ -24,7 +24,7 @@ struct ToDoListView: View {
         NavigationView {
             VStack {
                 List(items) { item in
-                    ToDoListItemView(item: item)
+                    ToDoListItemView(item: item, folderTitle: folderTitle)
                         .swipeActions {
                             Button("Delete") {
                                 viewModel.delete(id: item.id)

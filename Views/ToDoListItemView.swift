@@ -10,6 +10,7 @@ import SwiftUI
 struct ToDoListItemView: View {
     @StateObject var viewModel = ToDoListItemViewModel()
     let item: ToDoListItem
+    let folderTitle: String
     
     var body: some View {
         HStack {
@@ -25,7 +26,7 @@ struct ToDoListItemView: View {
             Spacer()
             
             Button {
-                viewModel.toggleIsDone(item: item)
+                viewModel.toggleIsDone(item: item, folderTitle: folderTitle)
             } label: {
                 Image(systemName: item.isDone ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(Color.blue)
@@ -35,5 +36,5 @@ struct ToDoListItemView: View {
 }
 
 #Preview {
-    ToDoListItemView(item: .init(id: "123", title: "title", deadline: Date().timeIntervalSince1970, created: Date().timeIntervalSince1970, isDone: false))
+    ToDoListItemView(item: .init(id: "123", title: "title", deadline: Date().timeIntervalSince1970, created: Date().timeIntervalSince1970, isDone: false), folderTitle: "Folder Title")
 }

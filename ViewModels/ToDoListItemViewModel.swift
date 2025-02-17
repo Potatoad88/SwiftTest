@@ -12,7 +12,7 @@ import Foundation
 class ToDoListItemViewModel: ObservableObject {
     init() {}
     
-    func toggleIsDone(item: ToDoListItem) {
+    func toggleIsDone(item: ToDoListItem, folderTitle: String) {
         var itemCopy = item
         itemCopy.setDone(!item.isDone)
         
@@ -23,6 +23,8 @@ class ToDoListItemViewModel: ObservableObject {
         let db = Firestore.firestore()
         db.collection("users")
             .document(uid)
+            .collection("folders")
+            .document(folderTitle)
             .collection("todos")
             .document(itemCopy.id)
             .setData(itemCopy.asDictionary())
